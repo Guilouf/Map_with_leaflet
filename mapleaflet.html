@@ -1,0 +1,48 @@
+<html>
+        <head>
+            <!-- shift + brownser pour ouvrir en local sur pycharm -->
+            <title> Leaflet Delator </title>
+
+            <!-- faut foutre ca dans le head pour les hosted -->
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+            <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+
+        </head>
+
+        <body>
+
+
+        <!--Ca marche mais ca me change de page.. que le script renvoit le lien vers la page?-->
+        <form name="formu" action="http://127.0.0.1:8080/" method="get">
+            <input type="text" name="_lat" value="Lat">
+            <input type="text" name="_long" value="Long">
+            <input type="text" name="_com" value="Long">
+            <input type="submit" name="subie">
+        </form>
+
+        <!-- Faut bien précisier le style sinon il veut pas.. pr les 98% c'est à cause du footer -->
+        <div id="map" style="width: 100%; height: 80%"    > </div>
+
+            <!-- Import des données geojson (penser à l'ordre) -->
+            <script type='text/javascript' src="basias.geojson" ></script>
+            <!-- Import de mon script -->
+            <script type='text/javascript' src="map_js.js" ></script>
+
+        <!-- Affichage lat/long -->
+        <div id="footer" style="height:20px">&copy; <a href="http://www.wesh">Des infos</a> Wesh attends, clique!
+        </div>
+        <div id="formu" style="height:20px"> stp vas y
+            <input class="lat" type="text" name="lat" value="Lache ton com! ">
+            <input class="subutext" type="submit" name="subutext">
+        </div>
+
+         <!-- Le formulaire, qu'il faudrait préremplie avec les coords.. ca rafraichie la page des kon clik dc nique tt, en fait c de la merde..
+        <form name="formu" onsubmit="return aj_marker([34,3.6], 'yo')">
+            <input type="text" name="lat" value="Lat">
+            <input type="text" name="long" value="Long">
+            <input type="submit" name="subie">
+        </form> -->
+
+
+        </body>
+</html>
