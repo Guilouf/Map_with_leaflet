@@ -1,0 +1,37 @@
+var geojson_ext = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.540587495631605,
+          48.134243911875544
+        ]
+      },
+      "properties": {
+        "description_code": "g47.30z, v89.03z",
+        "adress": "Rue rennes (de) ",
+        "name": "GUILARD SARL, JOSSE, station-service et DLI",
+        "activity": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.4815550436966332,
+          48.460195409671655
+        ]
+      },
+      "properties": {
+        "description_code": "g47.30z, g45.21a",
+        "adress": "Avenue De Gaulle (du Général) ",
+        "name": "FREMONY Jean-Claude / JOUAULT et DELARUE, station-service",
+        "activity": false
+      }
+    },
+  ]
+};

@@ -23,7 +23,7 @@ function aj_marker(coord, message) {
 
 //ajout des différents markers
 aj_marker([47.4, 0.56], 'Merde, merde merde!');
-aj_marker([47.4, 1.5], 'Merde, merde chier!');
+aj_marker([47.4, 1.5], 'MERDE');
 //On est obligé de mettre new ici..(geojson_ext provient d'un autre fichier js)
 //new L.GeoJSON(geojson_ext).addTo(map).bindPopup("Le message").openPopup();
 
