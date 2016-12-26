@@ -20,10 +20,20 @@
             <input type="submit" name="subie">
         </form>
 
+        <div id="selec_prop" style="height:20px">
+         <!-- Affichage lat/long et insertion marker temporaire-->
+            <input type="text" name="Mot clef" class="motcle">
+            /// Select the properties:
+             <select class="selector" onchange="map.removeLayer(layer); layer = map_geojson(geojson_ext);"><!-- call of js-->
+                  <option value=true>En activite</option>
+                  <option value=false>En friche</option>
+             </select>
+        </div>
+
         <!-- Faut bien précisier le style sinon il veut pas.. pr les 98% c'est à cause du footer -->
         <div id="map" style="width: 100%; height: 80%"    > </div>
 
-            <!-- Import des données geojson (penser à l'ordre) -->
+            <!-- Import des données geojson (penser à l'ordre), todo c'est mieux de l'avoir non indente, moins lourd -->
             <script type='text/javascript' src="basias.geojson" ></script>
             <!-- Import de mon script -->
             <script type='text/javascript' src="map_js.js" ></script>
@@ -36,13 +46,7 @@
             <input class="lat" type="text" name="lat" value="Any comment ?">
             <input class="subutext" type="submit" name="subutext">
         </div>
-        <div id="selec_prop" style="height:20px">
-         <!-- Affichage lat/long et insertion marker temporaire-->
-            /// Select the properties:
-             <select>
 
-             </select>
-        </div>
          <!-- Le formulaire, qu'il faudrait préremplie avec les coords.. ca rafraichie la page des kon clik dc nique tt, en fait c de la merde..
         <form name="formu" onsubmit="return aj_marker([34,3.6], 'yo')">
             <input type="text" name="lat" value="Lat">
