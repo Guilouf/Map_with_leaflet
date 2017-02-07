@@ -20,19 +20,49 @@
             <input type="submit" name="subie">
         </form>
 
-        <div id="selec_prop" style="height:20px">
+        <div id="selec_prop" style="height:80px">
+            <!-- Style pour cacher les checkboxs..-->
+            <style>
+                .dyn_codes_selector2{
+                display: none;
+                }
+                .dyn_codes_selector:hover .dyn_codes_selector2{
+                display : block;
+                }
+            </style>
          <!-- Affichage lat/long et insertion marker temporaire-->
-            <input type="text" name="Mot clef" class="motcle">
-            /// Select the properties:
+            <input type="text" name="Mot clef" class="motcle" onchange="map.removeLayer(layer); layer = map_geojson(geojson_ext);">
+            /// Select the properties :
              <select class="selector" onchange="map.removeLayer(layer); layer = map_geojson(geojson_ext);"><!-- call of js-->
                   <option value=true>En activite</option>
                   <option value=false>En friche</option>
+                 <option value=null>Les deux</option>
              </select>
+            /// Codes selector :
+            <select class="codes_selector" id="codes_selector" onchange="fill_sub_selec(codes, code_selector)"><!-- cette fois ci ca marche ac l'id..-->
+                  <option value=true>BIte</option>
+             </select>
+            <br>/// Subclass :
+            <select class="dyn_codes_selector" id="dyn_codes_selector" ><!-- call of js-->
+                  <option value=true>BIte</option>
+             </select>
+            <div class="dyn_codes_selector2" id="dyn_codes_selector2"><!-- call of js-->
+                <input type="checkbox" /> This is checkbox <br />
+                <input type="checkbox" /> This is checkbox <br />
+                <input type="checkbox" /> This is checkbox <br />
+                <input type="checkbox" /> This is checkbox <br />
+                <input type="checkbox" /> This is checkbox <br />
+                <input type="checkbox" /> This is checkbox <br />
+             </div>
+            <!-- en html, ya aussi le select multiple, sinon javascript.. ou alors affichage ou survol ac du css
+             style="border:2px solid #ccc; width:300px; height: 30px; overflow-y: scroll;" -->
         </div>
 
         <!-- Faut bien précisier le style sinon il veut pas.. pr les 98% c'est à cause du footer -->
         <div id="map" style="width: 100%; height: 80%"    > </div>
 
+            <!-- Import de la traduction des codes -->
+            <script type='text/javascript' src="codes.json" ></script>
             <!-- Import des données geojson (penser à l'ordre), todo c'est mieux de l'avoir non indente, moins lourd -->
             <script type='text/javascript' src="basias.geojson" ></script>
             <!-- Import de mon script -->

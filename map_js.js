@@ -23,6 +23,30 @@ function aj_marker(coord, message) {
             .openPopup();
 }
 
+
+/*
+Remplissage du selecteur de codes, une fois pour toutes
+*/
+var code_selector = document.getElementById('codes_selector');
+for (var key in codes) {
+    var opt = document.createElement('option');
+    opt.value = opt.text = key;
+    code_selector.add( opt );
+}
+
+/*
+Remplissage du sous selecteur (appélé depuis le html du selecteur parent)
+*/
+function fill_sub_selec (codes, code_selector) {
+    var sub_selec = document.getElementById('dyn_codes_selector');
+    sub_selec.textContent = "";
+    for (var key in codes[code_selector.value]) {
+        var opt = document.createElement('option');
+        opt.value = opt.text = key;
+        sub_selec.add( opt );
+    }
+}
+
 //ajout des différents markers
 aj_marker([47.4, 0.56], 'Merde, merde merde!');
 aj_marker([47.4, 1.5], 'MERDE');
@@ -40,22 +64,25 @@ function sort_geojson (geo_var, filter){
         "features": []};
     var features = geo_var["features"];
     for (var index in geo_var["features"]) { // ya pas de collection en js, la merde..
-        var bool_push = false
-        if (features[index]["properties"]["activity"] == filter[0] || filter[0] == null) { //select act or inactivity
-            bool_push = true;
+        if (features[index]["properties"]["activity"] == filter[0] || filter[0]==null) { //select act or inactivity, filter[0] = boolfriche
+            //then go to the next criterium, else end loop
         } else {
-            bool_push = false;
+            continue;  // ignore the rest
         }
-        // basic search engine..
-//        if (features[index]["properties"]["name"].includes(filter[1]) || filter[1] == null) {
-//            bool_push = true;
-//        } else {
-//            bool_push = false;
-//        }
-        if (bool_push) { // allow multiple criterium selection
-            sorted_geoj["features"].push(features[index]); // bah oui, append c'est trop simple..
+        // basic search engine, ignore caps, multiple words
+        var searched_word_s = filter[1].toUpperCase().split(" ") ;
+        var bool_search = true;
+        for (var index_mot in searched_word_s) { // peut pas faire le continue ici, label?
+            if (features[index]["properties"]["name"].toUpperCase().includes(searched_word_s[index_mot]) || filter[1] == "") {
+            } else {
+                bool_search =  false;
+            }
         }
+        bool_search ? sorted_geoj["features"].push(features[index]) : false;
+         // bah oui, append c'est trop simple..
+
     }
+    // todo add code selector..
     return sorted_geoj
 };
 
@@ -66,10 +93,18 @@ Add the markers from geojson, call sort function, link their properties with the
 function map_geojson(geojson_ext) {
     // maintenant faut rafraichir..
     var select = document.getElementById('selec_prop');
-    var bool_friche = select.getElementsByClassName('selector')[0].value == "true" ? false : true;
-    //alert(div_selector.getElementsByClassName('selector')[0].value)
+//    var bool_friche = select.getElementsByClassName('selector')[0].value == "true" ? true : false; //todo null for both?
+    var bool_friche = "";
+    switch(select.getElementsByClassName('selector')[0].value) { // ne pas oublier le break..
+        case "true": bool_friche = true; break;
+        case "false": bool_friche = false; break;
+        case "null": bool_friche = null; break;
+    }
+    var searched_word = select.getElementsByClassName('motcle')[0].value ;
+
+    // pass the selection arguments
     geojson_ext = sort_geojson(geojson_ext, [bool_friche,
-        null]);
+        searched_word]);
 
     var layer_geoj = L.geoJson(geojson_ext, { //todo petits soucis de perf.. il faut le plug leaflet.markercluster,
         onEachFeature: function (feature, layer) { // pose pas de pb de perf
